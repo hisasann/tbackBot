@@ -67,8 +67,8 @@ class RandomTumble
   end
 
   def makeMessage
-    # time = Time.now.strftime("%Y/%m/%d %H時の1枚　")
-    return "この時間帯のオススメの1枚->" + @url + " #tback"
+    time = Time.now.strftime("%Y/%m/%d %H時")
+    return time + "の1枚->" + @url + " #tback"
   end
 end
 
