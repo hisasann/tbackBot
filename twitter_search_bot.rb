@@ -1,5 +1,6 @@
 require "rubygems"
 require 'twitter'
+require 'time'
 
 class SearchRT
   attr_accessor :id, :pass, :query
@@ -15,22 +16,41 @@ class SearchRT
     search()
   end
   
+  private
   def search()
-    Twitter::Search.new(@query).each do |r|
-      # puts r["from_user"]
-      # puts r["text"]
-      post_twitter(r["from_user"], r["text"])
+    Twitter::Search.new(@query).each do |data|
+      post_twitter(data)
     end
   end
   
-  def post_twitter(user, text)
-    msg = makeMessage(user, text)
+  def post_twitter(user)
+    if !isPost(user.created_at) then
+      return
+    end
 
-    # httpauth = Twitter::HTTPAuth.new(@id, @pass)
-    # twit = Twitter::Base.new(httpauth)
-    # twit.update(makeMessage(msg))
-    puts msg.split(//u).length
-    puts msg
+    msg = makeMessage(user.from_user, user.text)
+    # puts msg.split(//u).length  # debug
+    # puts msg
+
+    httpauth = Twitter::HTTPAuth.new(@id, @pass)
+    twit = Twitter::Base.new(httpauth)
+    twit.update(msg)
+  end
+  
+  def isPost(date)
+    hour = 3600 # 1時間前
+    now = Time.at(Time.now) - hour
+    created = Time.parse(date)
+    
+    # puts now        # debug
+    # puts created
+
+    # 指定の時間前ならtrueを返す
+    if created.to_i > now.to_i
+      return true
+    end
+    
+    return false
   end
   
   def makeMessage(user, text)
