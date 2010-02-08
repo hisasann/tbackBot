@@ -30,15 +30,15 @@ class SearchRT
 
     msg = makeMessage(user.from_user, user.text)
     # puts msg.split(//u).length  # debug
-    # puts msg
+    puts msg
 
-    httpauth = Twitter::HTTPAuth.new(@id, @pass)
-    twit = Twitter::Base.new(httpauth)
-    twit.update(msg)
+    # httpauth = Twitter::HTTPAuth.new(@id, @pass)
+    # twit = Twitter::Base.new(httpauth)
+    # twit.update(msg)
   end
   
   def isPost(date)
-    hour = 3600 # 1時間前
+    hour = 3610 # 1時間前
     now = Time.at(Time.now) - hour
     created = Time.parse(date)
     
