@@ -38,7 +38,7 @@ class SearchRT
   end
   
   def isPost(date)
-    hour = 3610 # 1時間ちょい前
+    hour = 3500 # 1時間ちょい前
     now = Time.at(Time.now) - hour
     created = Time.parse(date)
     
